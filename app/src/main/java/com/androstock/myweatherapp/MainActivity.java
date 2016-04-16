@@ -39,19 +39,7 @@ public class MainActivity extends AppCompatActivity {
         weatherIcon = (TextView)findViewById(R.id.weather_icon);
         weatherIcon.setTypeface(weatherFont);
 
-        final Function.placeIdTask asyncTask =new Function.placeIdTask(new Function.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
 
-                cityField.setText(weather_city);
-                updatedField.setText(weather_updatedOn);
-                detailsField.setText(weather_description);
-                currentTemperatureField.setText(weather_temperature);
-                humidity_field.setText("Humidity: "+weather_humidity);
-                pressure_field.setText("Pressure: "+weather_pressure);
-                weatherIcon.setText(Html.fromHtml(weather_iconText));
-
-            }
-        });
 
         editText = (EditText) findViewById(R.id.editText);
         editText.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +54,19 @@ public class MainActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                final Function.placeIdTask asyncTask =new Function.placeIdTask(new Function.AsyncResponse() {
+                    public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+
+                        cityField.setText(weather_city);
+                        updatedField.setText(weather_updatedOn);
+                        detailsField.setText(weather_description);
+                        currentTemperatureField.setText(weather_temperature);
+                        humidity_field.setText("Humidity: "+weather_humidity);
+                        pressure_field.setText("Pressure: "+weather_pressure);
+                        weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+                    }
+                });
                 asyncTask.execute(editText.getText().toString());
                 editText.setVisibility(View.INVISIBLE);
                 button.setVisibility(View.INVISIBLE);
